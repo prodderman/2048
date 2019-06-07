@@ -4,7 +4,8 @@ function createModel() {
   const grid = createGrid(4);
   const { subscribe, set, update } = writable(grid);
   return {
-		subscribe,
+    subscribe,
+    grid,
 	};
 }
 
@@ -13,7 +14,7 @@ function createGrid(size) {
   for (let i = 0; i < size; i++) {
     grid[i] = [];
     for (let j = 0; j < size; j++) {
-      grid[i][j] = 0;
+      grid[i][j] = null;
     }
   }
   return grid;
