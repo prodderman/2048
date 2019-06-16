@@ -1,0 +1,100 @@
+<script>
+  import { onMount } from 'svelte';
+  import { tweened, spring } from 'svelte/motion';
+  import { cubicOut } from 'svelte/easing';
+
+  export let value = 2;
+  export let position;
+  export let prevPosition;
+  export let merged = false;
+
+  const TAIL_OFFSET = 112;
+  const ANIMATION_OPTIONS = {
+		stiffness: 0.15,
+		damping: 0.5,
+  };
+
+  const X = position.x * TAIL_OFFSET;
+  const Y = position.y * TAIL_OFFSET;
+  const prevX = prevPosition ? prevPosition.x * TAIL_OFFSET : X;
+  const prevY = prevPosition ? prevPosition.y * TAIL_OFFSET : Y;
+
+  const moveX = spring(prevX, ANIMATION_OPTIONS);
+  const moveY = spring(prevY, ANIMATION_OPTIONS);
+
+  onMount(() => {
+    moveX.set(X);
+    moveY.set(Y);
+  });
+</script>
+
+<div
+  style="left: {$moveX}px; top: {$moveY}px"
+  class="tail tail_value_{value} {
+    (!prevPosition && !merged) ? 'tail_new' : ''
+    } {
+    merged ? 'tail_merged' : ''
+  }"
+>
+  {value}
+</div>
+
+<style>
+  .tail {
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 50px;
+    font-weight: 800;
+    color: #F8FFE5;
+    width: 100px;
+    height: 100px;
+    user-select: none;
+  }
+
+  .tail_value_2 {
+    background-color: #FFC43D;
+  }
+
+  .tail_value_4 {
+    background: #EF476F;
+  }
+
+  .tail_new {
+    animation: appear 200ms ease 200ms;
+    animation-fill-mode: backwards;
+  }
+
+  .tail_merged {
+    animation: pop 200ms ease 100ms;
+    animation-fill-mode: backwards;
+  }
+
+  @keyframes appear {
+    0% {
+      opacity: 0;
+      transform: scale(0); 
+    }
+
+    100% {
+      opacity: 1;
+      transform: scale(1); 
+    } 
+  }
+
+  @keyframes pop {
+    0% {
+      transform: scale(0); 
+    }
+
+    70% {
+      transform: scale(1.2); 
+    }
+
+    100% {
+      transform: scale(1); 
+    } 
+  }
+  
+</style>
