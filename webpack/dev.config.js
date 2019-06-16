@@ -2,8 +2,6 @@ const webpack = require('webpack');
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
-const isWatchMode = process.env.WATCH_MODE === 'true';
-
 module.exports = {
   target: 'web',
   context: path.resolve(__dirname, '..', 'src'),
@@ -19,19 +17,18 @@ module.exports = {
   },
   resolve: {
     modules: ['node_modules', 'src'],
-    extensions: ['.js', '.svelte'],
+    extensions: ['.mjs', '.js', '.svelte'],
   },
   module: {
     rules: [
       {
         test: /\.svelte$/,
         exclude: /node_modules/,
-        use: {
-          loader: 'svelte-loader',
-          options: {
-            //hotReload: true,
-          },
-        },
+        use: [
+          {
+            loader: 'svelte-loader',
+          }
+        ],
       },
       {
         test: /\.css/,
@@ -52,14 +49,14 @@ module.exports = {
     ]
   },
   plugins: [
-    ...isWatchMode ? [new webpack.HotModuleReplacementPlugin()] : [],
+    new webpack.HotModuleReplacementPlugin(),
     new HtmlWebpackPlugin({
       filename: 'index.html',
       template: 'assets/index.html',
     }),
   ],
   devServer: {
-    hot: isWatchMode,
+    hot: true,
     contentBase: path.resolve('..', 'build'),
     host: '0.0.0.0',
     port: 8080,
