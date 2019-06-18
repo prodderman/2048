@@ -1,21 +1,22 @@
 <script>
-	import { model } from '../model/model.js';
+	import Game from '../game';
   import Board from '../view/Board.svelte';
+  import KeyboardManager from '../view/KeyboardManager.svelte';
+
+  const gridSize = 4;
+  const game = new Game(gridSize);
+  const { tiles, move } = game;
 </script>
 
 <div>
-  <Board grid={model.grid} />
+  <Board {tiles} {gridSize} />
 </div>
 
-<style>
-  :global(*) {
-    box-sizing: border-box;
-  }
+<KeyboardManager {move} />
 
-  :global(html), :global(body) {
-    font-size: 100%;
-    margin: 0;
-    padding: 0;
+<style>
+  :global(html),
+  :global(body) {
     height: 100%;
   }
 

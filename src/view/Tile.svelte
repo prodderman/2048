@@ -50,6 +50,7 @@
     color: #F8FFE5;
     width: 100px;
     height: 100px;
+    border-radius: 3px;
     user-select: none;
   }
 
@@ -58,6 +59,42 @@
   }
 
   .tail_value_4 {
+    background: #EF476F;
+  }
+
+  .tail_value_8 {
+    background: #EF476F;
+  }
+
+  .tail_value_16 {
+    background: #EF476F;
+  }
+
+  .tail_value_32 {
+    background: #EF476F;
+  }
+
+  .tail_value_64 {
+    background: #EF476F;
+  }
+
+  .tail_value_128 {
+    background: #EF476F;
+  }
+
+  .tail_value_256 {
+    background: #EF476F;
+  }
+
+  .tail_value_512 {
+    background: #EF476F;
+  }
+
+  .tail_value_1024 {
+    background: #EF476F;
+  }
+
+  .tail_value_2048 {
     background: #EF476F;
   }
 

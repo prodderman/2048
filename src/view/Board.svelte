@@ -1,45 +1,53 @@
 <script>
-  import Cell from './Cell.svelte';
-  export let grid;
+  import Tile from './Tile.svelte';
+  import Grid from './Grid.svelte';
+  export let tiles;
+  export let gridSize;
 </script>
 
 <div class="board">
-  {#each grid as i}
-		<div class="row">
-      {#each grid as j}
-        <div class="cell"/>
-      {/each}
-    </div>
-	{/each}
+  <Grid {gridSize}/>
+  <div class="tails">
+    {#each $tiles as tile (tile)}
+      {#if tile.mergedFrom}
+        {#each tile.mergedFrom as mergedTile}
+          <Tile
+            value={mergedTile.value}
+            position={mergedTile.position}
+            prevPosition={mergedTile.prevPosition}
+          />
+        {/each}
+        <Tile
+          value={tile.value}
+          position={tile.position}
+          prevPosition={tile.prevPosition}
+          merged
+        />
+      {:else}
+        <Tile
+          value={tile.value}
+          position={tile.position}
+          prevPosition={tile.prevPosition}
+        />
+      {/if}
+    {/each}
+  </div>
 </div>
 
 <style>
   .board {
-    display: flex;
-    flex-direction: column;
-    touch-action: none;
+    position: relative;
     background: #bbada0;
     border-radius: 6px;
     padding: 12px;
+    touch-action: none;
   }
 
-  .row {
-    display: flex;
-    margin-bottom: 12px;
-  }
-
-  .row:last-child {
-    margin-bottom: 0;
-  }
-
-  .cell {
-    width: 97px;
-    height: 97px;
-    margin-right: 12px;
-    background: rgba(238, 228, 218, 0.35);
-  }
-
-  .cell:last-child {
-    margin-right: 0;
+  .tails {
+    position: absolute;
+    top: 12px;
+    bottom: 12px;
+    left: 12px;
+    right: 12px;
   }
 </style>
