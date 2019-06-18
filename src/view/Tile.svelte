@@ -10,8 +10,8 @@
 
   const TAIL_OFFSET = 112;
   const ANIMATION_OPTIONS = {
-		stiffness: 0.2,
-		damping: 0.6,
+		stiffness: 0.55,
+		damping: 0.8,
   };
 
   const X = position.x * TAIL_OFFSET;
@@ -103,7 +103,7 @@
   }
 
   .tail_merged {
-    animation: pop 200ms ease 50ms;
+    animation: pop 200ms ease 20ms;
     animation-fill-mode: backwards;
   }
 

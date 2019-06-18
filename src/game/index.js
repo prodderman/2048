@@ -77,15 +77,9 @@ class Game {
   }
 
   addStartTiles() {
-    const t1 = new Tile({x:0, y: 3}, 2);
-    const t2 = new Tile({x:1, y: 3}, 2);
-    const t3 = new Tile({ x: 2, y: 3 }, 4);
-    this._grid.insertItem(t1, t1.position);
-    this._grid.insertItem(t2, t2.position);
-    this._grid.insertItem(t3, t3.position);
-    // for (let i = 0; i < this._startTilesCount; i++) {
-    //   this.addRandomTile();
-    // }
+    for (let i = 0; i < this._startTilesCount; i++) {
+      this.addRandomTile();
+    }
   }
 
   addRandomTile() {
