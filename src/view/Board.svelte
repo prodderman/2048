@@ -37,17 +37,17 @@
 <style>
   .board {
     position: relative;
-    background: #bbada0;
-    border-radius: 6px;
     padding: 12px;
+    border-radius: 6px;
+    background: #bbada0;
     touch-action: none;
   }
 
   .tails {
     position: absolute;
     top: 12px;
+    right: 12px;
     bottom: 12px;
     left: 12px;
-    right: 12px;
   }
 </style>

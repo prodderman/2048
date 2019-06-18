@@ -22,8 +22,8 @@
 
   div {
     display: flex;
-    justify-content: center;
     align-items: center;
+    justify-content: center;
     height: 100%;
   }
 </style>

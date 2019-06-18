@@ -29,7 +29,7 @@
 </script>
 
 <div
-  style="left: {$moveX}px; top: {$moveY}px"
+  style=" top: {$moveY}px; left: {$moveX}px;"
   class="tail tail_value_{value} {
     (!prevPosition && !merged) ? 'tail_new' : ''
     } {
@@ -43,30 +43,30 @@
   .tail {
     position: absolute;
     display: flex;
-    justify-content: center;
     align-items: center;
-    font-size: 50px;
-    font-weight: 800;
-    color: #F8FFE5;
+    justify-content: center;
     width: 100px;
     height: 100px;
+    color: #f8ffe5;
+    font-weight: 800;
+    font-size: 50px;
     user-select: none;
   }
 
   .tail_value_2 {
-    background-color: #FFC43D;
+    background-color: #ffc43d;
   }
 
   .tail_value_4 {
-    background: #EF476F;
+    background: #ef476f;
   }
 
   .tail_value_8 {
-    background: #1B9AAA;
+    background: #1b9aaa;
   }
 
   .tail_value_16 {
-    background: #06D6A0;
+    background: #06d6a0;
   }
 
   .tail_value_32 {
@@ -110,27 +110,27 @@
   @keyframes appear {
     0% {
       opacity: 0;
-      transform: scale(0); 
+      transform: scale(0);
     }
 
     100% {
       opacity: 1;
-      transform: scale(1); 
-    } 
+      transform: scale(1);
+    }
   }
 
   @keyframes pop {
     0% {
-      transform: scale(0); 
+      transform: scale(0);
     }
 
     70% {
-      transform: scale(1.2); 
+      transform: scale(1.2);
     }
 
     100% {
-      transform: scale(1); 
-    } 
+      transform: scale(1);
+    }
   }
-  
+
 </style>
