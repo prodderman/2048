@@ -8,7 +8,7 @@
   "scripts": {
     "build": "better-npm-run build:prod",
     "dev": "better-npm-run watch:dev",
-    "deploy:gh-pages": "npm run build && gh-pages -d build"
+    "gh-pages": "npm run build && gh-pages -d build"
   },
   "betterScripts": {
     "watch:dev": {
