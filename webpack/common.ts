@@ -3,9 +3,7 @@ import webpack from 'webpack';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 import { CleanWebpackPlugin } from 'clean-webpack-plugin';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
-import FileManagerWebpackPlugin from 'filemanager-webpack-plugin';
-// import threadLoaderLib from 'thread-loader';
-
+import pkg from '../package.json';
 const isProduction = process.env.NODE_ENV === 'production';
 const isDevelopment = process.env.NODE_ENV === 'development';
 const isWatchMode = process.env.WATCH_MODE === 'true';
@@ -23,10 +21,6 @@ const threadLoader: webpack.Loader[] = (() => {
       workers: require('os').cpus().length - 1,
       poolTimeout: withHot ? Infinity : 2000,
     };
-    // isWatchMode && threadLoaderLib.warmup(workerPool, [
-    //   'babel-loader',
-    //   'ts-loader',
-    // ]);
     return [{ loader: 'thread-loader', options: workerPool }];
   }
   return [];
@@ -50,16 +44,6 @@ export const getCommonPlugins: (type: BuildType) => webpack.Plugin[] = (type) =>
     '__SERVER__': false,
   }),
   ...withHot && type !== 'prod' ? [new webpack.HotModuleReplacementPlugin()] : [],
-  ...forGHPages ? new FileManagerWebpackPlugin({
-    onEnd: {
-      copy: [
-        {
-          source: `src/assets/CNAME`,
-          destination: `build`,
-        },
-      ],
-    },
-  }) : [],
 ];
 
 export const getCommonRules: (type: BuildType) => webpack.Rule[] = () => [
@@ -117,7 +101,7 @@ export const commonConfig: webpack.Configuration = {
   target: 'web',
   context: path.resolve(__dirname, '..', 'src'),
   output: {
-    publicPath: '/',
+    publicPath: forGHPages ? `/${pkg.name}` : '/',
     path: path.resolve(__dirname, '..', 'build'),
     filename: `js/[name]-[${chunkHash}].bundle.js`,
     chunkFilename: `js/[${chunkName}]-[${chunkHash}].bundle.js`,

@@ -1,5 +1,5 @@
 {
-  "name": "2048svelte",
+  "name": "2048",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -8,7 +8,8 @@
   "scripts": {
     "build": "better-npm-run build:prod",
     "dev": "better-npm-run watch:dev",
-    "gh-pages": "npm run build && gh-pages -d build",
+    "deploy": "npm run build:gh-pages && gh-pages -d build",
+    "build:gh-pages": "better-npm-run build:gh-pages",
     "stylelint-autofix": "stylelint \"./src/**/*.svelte\" --fix"
   },
   "betterScripts": {
@@ -23,9 +24,22 @@
       }
     },
     "build:prod": {
+      "command": "node_modules/.bin/webpack --progress --colors --config webpack/prod.config.ts",
+      "env": {
+        "NODE_ENV": "production",
+        "TS_NODE_FILES": true,
+        "TS_NODE_COMPILER_OPTIONS": "{\"target\": \"es5\", \"module\": \"commonjs\"}",
+        "THREADED": false
+      }
+    },
+    "build:gh-pages": {
       "command": "webpack --progress --colors --config webpack/prod.config.ts",
       "env": {
-        "NODE_ENV": "production"
+        "FOR_GH_PAGES": true,
+        "NODE_ENV": "production",
+        "TS_NODE_FILES": true,
+        "TS_NODE_COMPILER_OPTIONS": "{\"target\": \"es5\", \"module\": \"commonjs\"}",
+        "THREADED": false
       }
     }
   },
