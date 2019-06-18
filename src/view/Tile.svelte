@@ -63,39 +63,39 @@
   }
 
   .tail_value_8 {
-    background: #EF476F;
+    background: #1B9AAA;
   }
 
   .tail_value_16 {
-    background: #EF476F;
+    background: #06D6A0;
   }
 
   .tail_value_32 {
-    background: #EF476F;
+    background: #f37694;
   }
 
   .tail_value_64 {
-    background: #EF476F;
+    background: #22c2d6;
   }
 
   .tail_value_128 {
-    background: #EF476F;
+    background: #17f8be;
   }
 
   .tail_value_256 {
-    background: #EF476F;
+    background: #ffd470;
   }
 
   .tail_value_512 {
-    background: #EF476F;
+    background: #eb184a;
   }
 
   .tail_value_1024 {
-    background: #EF476F;
+    background: #14727e;
   }
 
   .tail_value_2048 {
-    background: #EF476F;
+    background: #05a47b;
   }
 
   .tail_new {
