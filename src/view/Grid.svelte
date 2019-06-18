@@ -35,7 +35,6 @@
     height: 100px;
     margin-right: 12px;
     background: rgba(238, 228, 218, 0.35);
-    border-radius: 3px;
   }
 
   .grid__cell:last-child {
