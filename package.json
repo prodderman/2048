@@ -4,47 +4,69 @@
   "description": "",
   "main": "index.js",
   "author": "",
-  "license": "ISC",
+  "license": "MIT",
   "scripts": {
     "build": "better-npm-run build:prod",
     "dev": "better-npm-run watch:dev",
-    "gh-pages": "npm run build && gh-pages -d build"
+    "gh-pages": "npm run build && gh-pages -d build",
+    "stylelint-autofix": "stylelint \"./src/**/*.svelte\" --fix"
   },
   "betterScripts": {
     "watch:dev": {
-      "command": "webpack-dev-server --watch --progress --colors --config webpack/dev.config.js",
+      "command": "webpack-dev-server --watch --progress --colors --config webpack/dev.config.ts",
       "env": {
         "NODE_ENV": "development",
-        "WATCH_MODE": true
+        "TS_NODE_FILES": true,
+        "WATCH_MODE": true,
+        "TS_NODE_COMPILER_OPTIONS": "{\"target\": \"es5\", \"module\": \"commonjs\"}",
+        "THREADED": true
       }
     },
     "build:prod": {
-      "command": "webpack --progress --colors --config webpack/prod.config.js",
+      "command": "webpack --progress --colors --config webpack/prod.config.ts",
       "env": {
         "NODE_ENV": "production"
       }
     }
   },
+  "homepage": "https://github.com/prodderman/2048",
   "devDependencies": {
     "@babel/plugin-proposal-class-properties": "^7.4.4",
+    "@types/clean-webpack-plugin": "^0.1.3",
+    "@types/html-webpack-plugin": "^3.2.0",
+    "@types/mini-css-extract-plugin": "^0.2.1",
+    "@types/node": "^12.0.8",
+    "@types/webpack": "^4.4.32",
+    "@types/webpack-dev-server": "^3.1.6",
     "babel-loader": "^8.0.6",
     "better-npm-run": "^0.1.1",
     "clean-webpack-plugin": "^3.0.0",
     "css-loader": "^2.1.1",
+    "filemanager-webpack-plugin": "^2.0.5",
     "gh-pages": "^2.0.1",
     "html-webpack-plugin": "^3.2.0",
     "mini-css-extract-plugin": "^0.7.0",
     "style-loader": "^0.23.1",
+    "stylelint": "^10.1.0",
+    "stylelint-config-standard": "^18.3.0",
+    "stylelint-order": "^3.0.0",
     "svelte": "^3.4.4",
-    "svelte-hot-loader": "^1.5.0",
     "svelte-loader": "^2.13.4",
+    "thread-loader": "^2.1.2",
+    "ts-loader": "^6.0.3",
+    "ts-node": "^8.3.0",
+    "tslint": "^5.17.0",
+    "tslint-eslint-rules": "^5.4.0",
     "webpack": "^4.33.0",
-    "webpack-cli": "^3.3.3",
-    "webpack-dev-server": "^3.7.1"
+    "webpack-cli": "^3.3.4",
+    "webpack-dev-server": "^3.7.2"
   },
   "dependencies": {
     "@babel/core": "^7.4.5",
+    "@types/ramda": "^0.26.9",
+    "decko": "^1.2.0",
     "normalize.css": "^8.0.1",
-    "ramda": "^0.26.1"
+    "ramda": "^0.26.1",
+    "typescript": "^3.5.2"
   }
 }

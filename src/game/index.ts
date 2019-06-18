@@ -1,46 +1,54 @@
-import { writable } from 'svelte/store';
+import { writable, Writable } from 'svelte/store';
 import { times } from 'ramda';
+import { bind } from 'decko';
+
+import { Direction, IVector, Size, IPosition, ITailInfo } from 'types';
 
 import Tile from './tile';
 import Grid from './grid';
 
-const VECTORS_MAP = {
-  up: { x: 0,  y: -1 },
-  right: { x: 1,  y: 0 },
-  down: { x: 0,  y: 1 },
+const VECTORS_MAP: Record<Direction, IVector> = {
+  up: { x: 0, y: -1 },
+  right: { x: 1, y: 0 },
+  down: { x: 0, y: 1 },
   left: { x: -1, y: 0 },
-}
+};
 
 class Game {
-  constructor(size = 4) {
-    this._size = size;
-    this._grid = new Grid(size);
-    this._startTilesCount = 2;
+  private grid: Grid<Tile>;
+  private size: Size;
+  private startTilesCount: number = 2;
+  private store!: Writable<ITailInfo[]>;
+
+  constructor(size: Size = 4) {
+    this.size = size;
+    this.grid = new Grid(size);
 
     this.buildStore();
     this.startGame();
   }
 
   get tiles() {
-    return { subscribe: this._store.subscribe };
+    return { subscribe: this.store.subscribe };
   }
 
-  move = (direction) => {
+  @bind
+  public move(direction: Direction) {
     const vector = this.getVector(direction);
     const traversals = this.buildTraversals(vector);
-    
+
     this.prepareTiles();
-    
+
     let hasAtLeastOneTileBeenMoved = false;
     traversals.x.forEach(x => {
       traversals.y.forEach(y => {
         const position = { x, y };
-        const item = this._grid.getItem(position);
+        const item = this.grid.getItem(position);
 
         if (item !== null) {
           const availablePosition = this.findAvailablePosition(position, vector);
           const nextPosition = this.getNextPosition(availablePosition, vector);
-          const itemOnNextPosition = this._grid.getItem(nextPosition);
+          const itemOnNextPosition = this.grid.getItem(nextPosition);
 
           if (
             itemOnNextPosition !== null &&
@@ -50,16 +58,16 @@ class Game {
             const mergedValue = itemOnNextPosition.value + item.value;
             const mergedTile = new Tile(nextPosition, mergedValue);
             mergedTile.setMergedFrom(item, itemOnNextPosition);
-            this._grid.removeItem(position);
-            this._grid.removeItem(nextPosition);
-            this._grid.insertItem(mergedTile, nextPosition);
+            this.grid.removeItem(position);
+            this.grid.removeItem(nextPosition);
+            this.grid.insertItem(mergedTile, nextPosition);
             item.setPosition(nextPosition);
           } else {
             this.moveTile(item, availablePosition);
           }
 
           if (!hasAtLeastOneTileBeenMoved && item.isMoved) {
-            hasAtLeastOneTileBeenMoved = true
+            hasAtLeastOneTileBeenMoved = true;
           }
         }
       });
@@ -71,28 +79,28 @@ class Game {
     }
   }
 
-  startGame() {
+  private startGame() {
     this.addStartTiles();
     this.updateStore();
   }
 
-  addStartTiles() {
-    for (let i = 0; i < this._startTilesCount; i++) {
+  private addStartTiles() {
+    for (let i = 0; i < this.startTilesCount; i++) {
       this.addRandomTile();
     }
   }
 
-  addRandomTile() {
-    const randomAvailableCell = this._grid.getRandomAvailableCell();
+  private addRandomTile() {
+    const randomAvailableCell = this.grid.getRandomAvailableCell();
     if (randomAvailableCell) {
       const value = Math.random() < 0.9 ? 2 : 4;
       const tile = new Tile(randomAvailableCell, value);
-      this._grid.insertItem(tile, randomAvailableCell);
+      this.grid.insertItem(tile, randomAvailableCell);
     }
   }
 
-  prepareTiles() {
-    this._grid.eachCell(item => {
+  private prepareTiles() {
+    this.grid.eachCell(item => {
       if (item) {
         item.clearMerged();
         item.savePosition();
@@ -100,45 +108,45 @@ class Game {
     });
   }
 
-  moveTile(tile, nextPosition) {
-    this._grid.moveItem(tile.position, nextPosition);
+  private moveTile(tile: Tile, nextPosition: IPosition) {
+    this.grid.moveItem(tile.position, nextPosition);
     tile.setPosition(nextPosition);
   }
 
-  buildStore() {
-    const tiles = this._grid.items;
+  private buildStore() {
+    const tiles = this.grid.items;
     const tilesInfo = tiles.map(tile => tile.tileInfo);
-    this._store = writable(tilesInfo);
+    this.store = writable(tilesInfo);
   }
 
-  updateStore() {
-    const tiles = this._grid.items;
+  private updateStore() {
+    const tiles = this.grid.items;
     const tilesInfo = tiles.map(tile => tile.tileInfo);
-    this._store.set(tilesInfo);
+    this.store.set(tilesInfo);
   }
 
-  getVector(direction) {
+  private getVector(direction: Direction): IVector {
     return VECTORS_MAP[direction];
   }
 
-  buildTraversals(vector) {
-    const size = this._size;
+  private buildTraversals(vector: IVector) {
+    const size = this.size;
     const x = times(i => vector.x === 1 ? (size - 1 - i) : i, size);
     const y = times(i => vector.y === 1 ? (size - 1 - i) : i, size);
     return { x, y };
   }
 
-  findAvailablePosition(position, vector) {
+  private findAvailablePosition(position: IPosition, vector: IVector): IPosition {
     const nextPosition = this.getNextPosition(position, vector);
-    const isNextPositionValid = this._grid.isPositionValid(nextPosition);
-    const isNextCellAvailable = this._grid.isCellAvailable(nextPosition);
+    const isNextPositionValid = this.grid.isPositionValid(nextPosition);
+    const isNextCellAvailable = this.grid.isCellAvailable(nextPosition);
 
     return isNextPositionValid && isNextCellAvailable
       ? this.findAvailablePosition(nextPosition, vector)
       : position;
   }
 
-  getNextPosition(position, vector) {
+  private getNextPosition(position: IPosition, vector: IVector): IPosition {
     return { x: position.x + vector.x, y: position.y + vector.y };
   }
 }
