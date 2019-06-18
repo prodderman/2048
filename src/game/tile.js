@@ -57,6 +57,10 @@ class Tile {
     return this._isMoved;
   }
 
+  get isMerged() {
+    return Boolean(this._mergedFrom);
+  }
+
   setPosition(position) {
     if (!this._isEqualPosition(position)) {
       this._position = { ...position };
