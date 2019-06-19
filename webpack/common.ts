@@ -3,7 +3,11 @@ import webpack from 'webpack';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 import { CleanWebpackPlugin } from 'clean-webpack-plugin';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
+import sveltePreprocess from 'svelte-preprocess';
+import autoprefixer from 'autoprefixer';
+
 import pkg from '../package.json';
+
 const isProduction = process.env.NODE_ENV === 'production';
 const isDevelopment = process.env.NODE_ENV === 'development';
 const isWatchMode = process.env.WATCH_MODE === 'true';
@@ -38,10 +42,6 @@ export const getCommonPlugins: (type: BuildType) => webpack.Plugin[] = (type) =>
   }),
   new webpack.DefinePlugin({
     'process.env.NODE_ENV_MODE': JSON.stringify(process.env.NODE_ENV_MODE),
-    '__HOST__': JSON.stringify('http://localhost:3000'),
-    '__LANG__': JSON.stringify(process.env.LANG || 'en'),
-    '__CLIENT__': true,
-    '__SERVER__': false,
   }),
   ...withHot && type !== 'prod' ? [new webpack.HotModuleReplacementPlugin()] : [],
 ];
@@ -53,6 +53,16 @@ export const getCommonRules: (type: BuildType) => webpack.Rule[] = () => [
     use: [
       {
         loader: 'svelte-loader',
+        options: {
+          emitCss: isProduction,
+          preprocess: sveltePreprocess({
+            postcss: {
+              plugins: [
+                autoprefixer({ browsers: 'last 2 versions' }),
+              ],
+            },
+          }),
+        },
       },
     ],
   },

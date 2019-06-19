@@ -11,9 +11,6 @@
   ],
   "rules": {
     "order/order": [
-      "dollar-variables",
-      "at-rules",
-      "declarations",
       {
         "type": "at-rule",
         "name": "keyframes",

@@ -1,7 +1,6 @@
 <script>
   import { onMount } from 'svelte';
-  import { tweened, spring } from 'svelte/motion';
-  import { cubicOut } from 'svelte/easing';
+  import { spring } from 'svelte/motion';
 
   export let value = 2;
   export let position;
@@ -39,7 +38,9 @@
   {value}
 </div>
 
-<style>
+<style lang="scss">
+  @import '../shared/styles/pow.scss';
+
   .tail {
     position: absolute;
     display: flex;
@@ -51,60 +52,22 @@
     font-weight: 800;
     font-size: 50px;
     user-select: none;
-  }
 
-  .tail_value_2 {
-    background-color: #ffc43d;
-  }
+    @for $i from 1 through 11 {
+      &_value_#{pow(2, $i)} {
+        background-color: #ffc43d;
+      }
+    }
 
-  .tail_value_4 {
-    background: #ef476f;
-  }
+    &_new {
+      animation: appear 200ms ease 200ms;
+      animation-fill-mode: backwards;
+    }
 
-  .tail_value_8 {
-    background: #1b9aaa;
-  }
-
-  .tail_value_16 {
-    background: #06d6a0;
-  }
-
-  .tail_value_32 {
-    background: #f37694;
-  }
-
-  .tail_value_64 {
-    background: #22c2d6;
-  }
-
-  .tail_value_128 {
-    background: #17f8be;
-  }
-
-  .tail_value_256 {
-    background: #ffd470;
-  }
-
-  .tail_value_512 {
-    background: #eb184a;
-  }
-
-  .tail_value_1024 {
-    background: #14727e;
-  }
-
-  .tail_value_2048 {
-    background: #05a47b;
-  }
-
-  .tail_new {
-    animation: appear 200ms ease 200ms;
-    animation-fill-mode: backwards;
-  }
-
-  .tail_merged {
-    animation: pop 200ms ease 20ms;
-    animation-fill-mode: backwards;
+    &_merged {
+      animation: pop 200ms ease 20ms;
+      animation-fill-mode: backwards;
+    }
   }
 
   @keyframes appear {
@@ -132,5 +95,4 @@
       transform: scale(1);
     }
   }
-
 </style>

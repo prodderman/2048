@@ -1,2 +1,2 @@
 declare module 'thread-loader';
-declare module 'filemanager-webpack-plugin';
+declare module 'svelte-preprocess-sass';
