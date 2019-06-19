@@ -39,8 +39,6 @@
 </div>
 
 <style lang="scss">
-  @import '../shared/styles/pow.scss';
-
   .tail {
     position: absolute;
     display: flex;
@@ -48,15 +46,81 @@
     justify-content: center;
     width: 100px;
     height: 100px;
-    color: #f8ffe5;
+    color: #776e65;
+    border-radius: 3px;
     font-weight: 800;
     font-size: 50px;
     user-select: none;
 
-    @for $i from 1 through 11 {
-      &_value_#{pow(2, $i)} {
-        background-color: #ffc43d;
-      }
+    &_value_2 {
+      background: #eee4da;
+      box-shadow: 0 0 30px 10px rgba(243, 215, 116, 0), inset 0 0 0 1px rgba(255, 255, 255, 0);
+    }
+
+    &_value_4 {
+      background: #ede0c8;
+      box-shadow: 0 0 30px 10px rgba(243, 215, 116, 0), inset 0 0 0 1px rgba(255, 255, 255, 0);
+    }
+
+    &_value_8 {
+      background: #f2b179;
+      color: #f9f6f2;
+    }
+
+    &_value_16 {
+      background: #f59563;
+      color: #f9f6f2;
+    }
+
+    &_value_32 {
+      background: #f67c5f;
+      color: #f9f6f2;
+    }
+
+    &_value_64 {
+      background: #f65e3b;
+      color: #f9f6f2;
+    }
+
+    &_value_128 {
+      background: #edcf72;
+      box-shadow: 0 0 30px 10px rgba(243, 215, 116, 0.2381), inset 0 0 0 1px rgba(255, 255, 255, 0.14286);
+      color: #f9f6f2;
+      font-size: 45px;
+    }
+
+    &_value_256 {
+      background: #edcc61;
+      box-shadow: 0 0 30px 10px rgba(243, 215, 116, 0.31746), inset 0 0 0 1px rgba(255, 255, 255, 0.19048);
+      color: #f9f6f2;
+      font-size: 45px;
+    }
+
+    &_value_512 {
+      background: #edc850;
+      box-shadow: 0 0 30px 10px rgba(243, 215, 116, 0.39683), inset 0 0 0 1px rgba(255, 255, 255, 0.2381);
+      color: #f9f6f2;
+      font-size: 45px;
+    }
+
+    &_value_1024 {
+      background: #edc53f;
+      box-shadow: 0 0 30px 10px rgba(243, 215, 116, 0.47619), inset 0 0 0 1px rgba(255, 255, 255, 0.28571);
+      color: #f9f6f2;
+      font-size: 35px;
+    }
+
+    &_value_2048 {
+      background: #edc22e;
+      box-shadow: 0 0 30px 10px rgba(243, 215, 116, 0.55556), inset 0 0 0 1px rgba(255, 255, 255, 0.33333);
+      color: #f9f6f2;
+      font-size: 35px;
+    }
+
+    &_value_super {
+      background: #3c3a32;
+      color: #f9f6f2;
+      font-size: 30px;
     }
 
     &_new {

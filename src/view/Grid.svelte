@@ -33,6 +33,7 @@
       margin-right: 12px;
       width: 100px;
       height: 100px;
+      border-radius: 3px;
       background: rgba(238, 228, 218, 0.35);
 
       &:last-child {
